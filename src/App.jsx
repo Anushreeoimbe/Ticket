@@ -1,6 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import { TicketProvider } from "./context/TicketContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -16,43 +23,73 @@ function App() {
         <Routes>
 
           <Route
-            path="/"
-            element={<Navigate to="/dashboard" replace />}
-          />
-
-          <Route
             path="/login"
             element={<Login />}
           />
 
           <Route
+            path="/"
+            element={
+              <Navigate
+                to="/login"
+                replace
+              />
+            }
+          />
+
+          <Route
             path="/dashboard"
-            element={<Dashboard />}
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/tickets"
-            element={<Tickets />}
+            element={
+              <ProtectedRoute>
+                <Tickets />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/tickets/create"
-            element={<CreateTicket />}
+            element={
+              <ProtectedRoute>
+                <CreateTicket />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/tickets/:id"
-            element={<TicketDetails />}
+            element={
+              <ProtectedRoute>
+                <TicketDetails />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/tickets/:id/edit"
-            element={<EditTicket />}
+            element={
+              <ProtectedRoute>
+                <EditTicket />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="*"
-            element={<Navigate to="/dashboard" replace />}
+            element={
+              <Navigate
+                to="/login"
+                replace
+              />
+            }
           />
 
         </Routes>
@@ -62,3 +99,4 @@ function App() {
 }
 
 export default App;
+
